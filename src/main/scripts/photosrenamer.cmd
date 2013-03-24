@@ -1,1 +1,1 @@
-javaw -cp .;./lib/* photosrenamer.Main
+@start javaw -cp .;./lib/* photosrenamer.Main
