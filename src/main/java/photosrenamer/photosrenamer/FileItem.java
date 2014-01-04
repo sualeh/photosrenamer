@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2012, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright 2004-2014, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License. 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ 
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -59,7 +59,7 @@ public final class FileItem
     @Override
     public void run()
     {
-      LOGGER.log(Level.FINEST, FileItem.this + ": Entered MetadataLoader");
+      logger.log(Level.FINEST, FileItem.this + ": Entered MetadataLoader");
 
       try
       {
@@ -98,7 +98,7 @@ public final class FileItem
       }
       catch (final Exception e)
       {
-        LOGGER.log(Level.FINE, FileItem.this.toString(), e);
+        logger.log(Level.FINE, FileItem.this.toString(), e);
       }
 
     }
@@ -151,14 +151,14 @@ public final class FileItem
       }
       catch (final Exception e)
       {
-        LOGGER.log(Level.FINE, FileItem.this.toString(), e);
+        logger.log(Level.FINE, FileItem.this.toString(), e);
       }
       return date;
     }
 
     private boolean loadImageThumbnail()
     {
-      LOGGER.log(Level.FINEST, FileItem.this
+      logger.log(Level.FINEST, FileItem.this
                                + ": Entered MetadataLoader:loadImageThumbnail");
       boolean loaded = false;
       try
@@ -167,14 +167,14 @@ public final class FileItem
         if (image != null)
         {
           thumbnail = new ImageIcon(scaleImage(image));
-          LOGGER.log(Level.INFO, FileItem.this
+          logger.log(Level.INFO, FileItem.this
                                  + ": Thumbnail created by scaling image");
           loaded = true;
         }
       }
       catch (final IOException e)
       {
-        LOGGER.log(Level.FINE, FileItem.this.toString(), e);
+        logger.log(Level.FINE, FileItem.this.toString(), e);
       }
       return loaded;
     }
@@ -197,7 +197,7 @@ public final class FileItem
       }
       catch (final Exception e)
       {
-        LOGGER.log(Level.FINE, FileItem.this.toString(), e);
+        logger.log(Level.FINE, FileItem.this.toString(), e);
       }
       return thumbnailLoaded;
     }
@@ -241,8 +241,7 @@ public final class FileItem
   /** Default icon, until the image is loaded. */
   public static final ImageIcon DEFAULT_IMAGE_ICON = createDefaultImageIcon();
 
-  private static final Logger LOGGER = Logger.getLogger(FileItem.class
-    .getName());
+  private static final Logger logger = Logger.getGlobal();
 
   private static final long serialVersionUID = -4057318666488966541L;
 
@@ -415,7 +414,7 @@ public final class FileItem
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.FINE, FileItem.this.toString(), e);
+      logger.log(Level.FINE, FileItem.this.toString(), e);
     }
     return null;
   }

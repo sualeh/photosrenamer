@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2012, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright 2004-2014, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -18,7 +18,7 @@ public final class Version
 {
 
   private final static String PRODUCTNAME = "Photos Renamer";
-  private final static String VERSION = "1.1";
+  private final static String VERSION = "1.2";
 
   /**
    * Information about this product.
@@ -30,7 +30,7 @@ public final class Version
     final StringBuffer about = new StringBuffer();
 
     about.append(getProductName()).append(" ").append(getVersion())
-      .append("\n").append("\u00A9 2004-2013 Sualeh Fatehi");
+      .append("\n").append("\u00A9 2004-2014 Sualeh Fatehi");
 
     return new String(about);
   }

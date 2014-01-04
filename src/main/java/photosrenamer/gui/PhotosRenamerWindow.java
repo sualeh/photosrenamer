@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2012, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright 2004-2014, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License. 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ 
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -36,7 +36,6 @@ import javax.swing.KeyStroke;
 import photosrenamer.Version;
 import photosrenamer.photosrenamer.FileComparator;
 import photosrenamer.photosrenamer.FilesRenamer;
-
 import sf.util.ui.ExitAction;
 import sf.util.ui.GuiAction;
 
@@ -45,16 +44,15 @@ import sf.util.ui.GuiAction;
  * 
  * @author Sualeh Fatehi
  */
-public final class FilesRenamerWindow
+public final class PhotosRenamerWindow
   extends JFrame
 {
 
-  private static final Logger logger = Logger
-    .getLogger(FilesRenamerWindow.class.getName());
+  private static final Logger logger = Logger.getGlobal();
   private static final long serialVersionUID = -1635298990546339443L;
 
   private static final Preferences preferences = Preferences
-    .userNodeForPackage(FilesRenamerWindow.class);
+    .userNodeForPackage(PhotosRenamerWindow.class);
 
   /**
    * Get the default directory for data files.
@@ -75,13 +73,13 @@ public final class FilesRenamerWindow
   /**
    * Creates a new instance of the Files Renamer main window.
    */
-  public FilesRenamerWindow()
+  public PhotosRenamerWindow()
   {
 
     setTitle(Version.getProductName());
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    setIconImage(new ImageIcon(FilesRenamerWindow.class.getResource("/sf.png")) //$NON-NLS-1$
+    setIconImage(new ImageIcon(PhotosRenamerWindow.class.getResource("/sf.png")) //$NON-NLS-1$
       .getImage());
 
     workingDir = loadWorkingDirectory();
@@ -190,15 +188,15 @@ public final class FilesRenamerWindow
       @Override
       public void actionPerformed(final ActionEvent event)
       {
-        final String fileStem = stemField.getText();
-
         try
         {
+          final String fileStem = stemField.getText();
+
           final FilesRenamer filesRenamer = new FilesRenamer(fileItemSortList
             .getFiles(), fileStem);
           filesRenamer.rename();
         }
-        catch (final IOException e)
+        catch (Exception e)
         {
           logger.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -265,7 +263,7 @@ public final class FilesRenamerWindow
       @Override
       public void actionPerformed(final ActionEvent actionevent)
       {
-        JOptionPane.showMessageDialog(FilesRenamerWindow.this,
+        JOptionPane.showMessageDialog(PhotosRenamerWindow.this,
                                       Version.about(),
                                       Version.getProductName(),
                                       JOptionPane.PLAIN_MESSAGE);

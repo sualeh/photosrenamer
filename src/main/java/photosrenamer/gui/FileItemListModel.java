@@ -18,7 +18,6 @@ import javax.swing.AbstractListModel;
 import photosrenamer.photosrenamer.FileComparator;
 import photosrenamer.photosrenamer.FileItem;
 
-
 public class FileItemListModel
   extends AbstractListModel<FileItem>
 {
@@ -27,8 +26,7 @@ public class FileItemListModel
 
   private final List<FileItem> fileItems;
 
-  private static final Logger logger = Logger.getLogger(FileItemListModel.class
-    .getName());
+  private static final Logger logger = Logger.getGlobal();
 
   private Path workingDir;
 

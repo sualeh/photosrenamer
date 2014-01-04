@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2012, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright 2004-2014, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License. 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ 
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -13,6 +13,11 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.util.regex.Pattern;
 
 /**
@@ -24,18 +29,21 @@ import java.util.regex.Pattern;
 public final class FilesRenamer
 {
 
+  private static final Logger logger = Logger.getGlobal();
+
+  private static final boolean DEBUG = false;
+
   private final List<Path> files;
   private final String fileStem;
-  private List<Path> pass1Files;
-  private List<Path> pass2Files;
 
   public FilesRenamer(final List<Path> files, final String fileStem)
   {
-    if (files == null)
+    if (files == null || files.isEmpty())
     {
       throw new IllegalArgumentException("No files provided");
     }
     this.files = files;
+
     if (fileStem == null || !Pattern.matches("^[a-zA-Z0-9_.]+$", fileStem))
     {
       throw new IllegalArgumentException("No alphanumeric filestem provided");
@@ -49,46 +57,107 @@ public final class FilesRenamer
   }
 
   public void rename()
-    throws IOException
   {
-    pass1Files = makeRenamePass1(files);
-    pass2Files = makeRenamePass2(pass1Files);
+    final String pass1FileStem = UUID.randomUUID().toString();
+
+    final List<Path> pass1Files = makeRenamePass(files, pass1FileStem);
+    makeRenamePass(pass1Files, fileStem);
   }
 
-  private List<Path> makeRenamePass1(final List<Path> files)
-    throws IOException
+  private void closeFileLogger(final FileHandler handler)
+  {
+    handler.close();
+    logger.removeHandler(handler);
+  }
+
+  private void logFiles(final List<Path>... files)
+  {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append("\n");
+    for (int i = 0; i < files[0].size(); i++)
+    {
+      for (int j = 0; j < files.length; j++)
+      {
+        if (i >= files[j].size())
+        {
+          continue;
+        }
+
+        if (j > 0)
+        {
+          buffer.append(" -> ");
+        }
+        buffer.append(String.format("%s", files[j].get(i).toFile().getName()));
+      }
+      buffer.append("\n");
+    }
+    logger.log(Level.INFO, buffer.toString());
+  }
+
+  private List<Path> makeRenamePass(final List<Path> files,
+                                    final String fileStem)
   {
     final List<Path> renamedFiles = new ArrayList<>();
+    int i = 0;
     for (final Path file: files)
     {
-      final Path renamedFile = Files.createTempFile(file.getParent(),
-                                                    "FilesRenamer",
-                                                    "image");
-      Files.move(file, renamedFile, StandardCopyOption.REPLACE_EXISTING);
-      renamedFiles.add(renamedFile);
+      try
+      {
+        if (DEBUG && i == 1)
+        {
+          throw new RuntimeException("Simulated exception");
+        }
+
+        final String originalFilename = file.toString();
+        final String extension = originalFilename
+          .substring(originalFilename.lastIndexOf('.') + 1).toLowerCase();
+
+        i = i + 1;
+        final Path renamedFile = file.resolveSibling(String
+          .format("%s_%04d.%s", fileStem, i, extension));
+
+        Files.move(file, renamedFile, StandardCopyOption.ATOMIC_MOVE);
+        renamedFiles.add(renamedFile);
+      }
+      catch (final Exception e)
+      {
+        final FileHandler handler = openFileLogger();
+
+        logger.log(Level.SEVERE,
+                   String.format("Error while renaming %s\n", file.toString()));
+        
+        logger.log(Level.INFO,
+                   String.format("Final file stem: \"%s\"; Current pass file stem: \"%s\"\n", this.fileStem,fileStem));
+        logFiles(files);
+        logFiles(files, renamedFiles);
+        logger.log(Level.SEVERE, e.getMessage(), e);
+
+        closeFileLogger(handler);
+
+        throw new RuntimeException(e);
+      }
+
     }
     return renamedFiles;
   }
 
-  private List<Path> makeRenamePass2(final List<Path> files)
-    throws IOException
+  private FileHandler openFileLogger()
   {
-    final List<Path> renamedFiles = new ArrayList<>();
-    for (int i = 0; i < files.size(); i++)
+    try
     {
-      final String originalFilename = this.files.get(i).toString();
-      final String extension = originalFilename
-        .substring(originalFilename.lastIndexOf('.') + 1).toLowerCase();
+      final String logFile = files.get(0).getParent()
+        .resolve("photos_renamer.log").toString();
+      final FileHandler handler = new FileHandler(logFile, true);
+      handler.setFormatter(new SimpleFormatter());
+      logger.addHandler(handler);
 
-      final Path file = files.get(i);
-      final Path renamedFile = file.resolveSibling(String.format("%s_%04d.%s",
-                                                                 fileStem,
-                                                                 i + 1,
-                                                                 extension));
-      Files.move(file, renamedFile, StandardCopyOption.ATOMIC_MOVE);
-      renamedFiles.add(renamedFile);
+      return handler;
     }
-    return renamedFiles;
+    catch (SecurityException | IOException e)
+    {
+      logger.log(Level.SEVERE, e.getMessage(), e);
+      throw new RuntimeException(e);
+    }
   }
 
 }
