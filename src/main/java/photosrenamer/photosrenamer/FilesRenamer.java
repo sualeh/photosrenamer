@@ -14,6 +14,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +32,8 @@ public final class FilesRenamer
 
   private static final Logger logger = Logger.getGlobal();
 
-  private static final boolean DEBUG = false;
+  private static final boolean DEBUG_FORCE_EXCEPTION = false;
+  private static final boolean DEBUG_FORCE_SLOWDOWN = false;
 
   private final List<Path> files;
   private final String fileStem;
@@ -103,9 +105,12 @@ public final class FilesRenamer
     {
       try
       {
-        if (DEBUG && i == 1)
+        if (DEBUG_FORCE_EXCEPTION && i == 1)
         {
           throw new RuntimeException("Simulated exception");
+        }
+        if (DEBUG_FORCE_SLOWDOWN) {
+          TimeUnit.SECONDS.sleep(2);
         }
 
         final String originalFilename = file.toString();
