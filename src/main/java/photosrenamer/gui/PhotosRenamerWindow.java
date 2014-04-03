@@ -79,7 +79,7 @@ public final class PhotosRenamerWindow
     setTitle(Version.getProductName());
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    setIconImage(new ImageIcon(PhotosRenamerWindow.class.getResource("/sf.png")) //$NON-NLS-1$
+    setIconImage(new ImageIcon(PhotosRenamerWindow.class.getResource("/sf.png")) 
       .getImage());
 
     workingDir = loadWorkingDirectory();

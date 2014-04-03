@@ -34,7 +34,7 @@ public final class ExitAction
    */
   public ExitAction(final JFrame frame, final String text)
   {
-    super(text, "/icons/exit.gif" //$NON-NLS-1$ 
+    super(text, "/icons/exit.gif"  
     );
     setShortcutKey(KeyStroke.getKeyStroke("control Q"));
     addActionListener(new ActionListener()
