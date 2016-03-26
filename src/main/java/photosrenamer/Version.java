@@ -18,7 +18,7 @@ public final class Version
 {
 
   private final static String PRODUCTNAME = "Photos Renamer";
-  private final static String VERSION = "1.2";
+  private final static String VERSION = "1.3.0";
 
   /**
    * Information about this product.
@@ -30,7 +30,7 @@ public final class Version
     final StringBuffer about = new StringBuffer();
 
     about.append(getProductName()).append(" ").append(getVersion())
-      .append("\n").append("\u00A9 2004-2014 Sualeh Fatehi");
+      .append("\n").append("\u00A9 2004-2016 Sualeh Fatehi");
 
     return new String(about);
   }
