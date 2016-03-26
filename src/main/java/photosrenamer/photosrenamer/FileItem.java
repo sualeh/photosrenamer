@@ -1,5 +1,5 @@
 /*
- * Copyright 2004-2014, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright (c) 2004-2016, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License. 
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/ 
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -63,15 +63,15 @@ public final class FileItem
 
       try
       {
-        final Metadata metadata = ImageMetadataReader.readMetadata(file
-          .toFile());
+        final Metadata metadata = ImageMetadataReader
+          .readMetadata(file.toFile());
 
         final ExifIFD0Directory exifDirectory = metadata
-          .getOrCreateDirectory(ExifIFD0Directory.class);
+          .getFirstDirectoryOfType(ExifIFD0Directory.class);
         final IptcDirectory iptcDirectory = metadata
-          .getOrCreateDirectory(IptcDirectory.class);
+          .getFirstDirectoryOfType(IptcDirectory.class);
         final ExifSubIFDDirectory exifSubDirectory = metadata
-          .getOrCreateDirectory(ExifSubIFDDirectory.class);
+          .getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
         loadImageCommentFromMetadata(iptcDirectory);
 
@@ -89,7 +89,7 @@ public final class FileItem
         date = earliestDate(date4, date);
 
         final ExifThumbnailDirectory thumbnailDirectory = metadata
-          .getOrCreateDirectory(ExifThumbnailDirectory.class);
+          .getFirstDirectoryOfType(ExifThumbnailDirectory.class);
         final boolean loadedImageThumbnailFromMetadata = loadImageThumbnailFromMetadata(thumbnailDirectory);
         if (!loadedImageThumbnailFromMetadata)
         {
@@ -140,7 +140,7 @@ public final class FileItem
       Date date = null;
       try
       {
-        if (directory.containsTag(tag))
+        if (directory != null && directory.containsTag(tag))
         {
           date = directory.getDate(tag);
           if (date.before(new Date(70, 1, 1)))
@@ -158,8 +158,8 @@ public final class FileItem
 
     private boolean loadImageThumbnail()
     {
-      logger.log(Level.FINEST, FileItem.this
-                               + ": Entered MetadataLoader:loadImageThumbnail");
+      logger.log(Level.FINEST,
+                 FileItem.this + ": Entered MetadataLoader:loadImageThumbnail");
       boolean loaded = false;
       try
       {
@@ -167,8 +167,8 @@ public final class FileItem
         if (image != null)
         {
           thumbnail = new ImageIcon(scaleImage(image));
-          logger.log(Level.INFO, FileItem.this
-                                 + ": Thumbnail created by scaling image");
+          logger.log(Level.INFO,
+                     FileItem.this + ": Thumbnail created by scaling image");
           loaded = true;
         }
       }
@@ -204,9 +204,8 @@ public final class FileItem
 
     private Image scaleImage(final Image image)
     {
-      Image scaledImage = image.getScaledInstance(IMAGE_WIDTH,
-                                                  -1,
-                                                  Image.SCALE_AREA_AVERAGING);
+      Image scaledImage = image
+        .getScaledInstance(IMAGE_WIDTH, -1, Image.SCALE_AREA_AVERAGING);
 
       // Create a buffered image from the scaled image,
       // with a white background
@@ -231,9 +230,9 @@ public final class FileItem
                                                          0,
                                                          IMAGE_WIDTH,
                                                          IMAGE_HEIGHT);
-      final Image thumbnail = Toolkit
-        .getDefaultToolkit()
-        .createImage(new FilteredImageSource(bufferedImage.getSource(), filter));
+      final Image thumbnail = Toolkit.getDefaultToolkit()
+        .createImage(new FilteredImageSource(bufferedImage.getSource(),
+                                             filter));
       return thumbnail;
     }
   }
