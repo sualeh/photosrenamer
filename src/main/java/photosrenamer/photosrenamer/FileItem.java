@@ -127,7 +127,7 @@ public final class FileItem
     {
       final boolean loaded = false;
       final int tag = IptcDirectory.TAG_CAPTION;
-      if (directory.containsTag(tag))
+      if (directory != null && directory.containsTag(tag))
       {
         comment = directory.getString(tag);
       }
