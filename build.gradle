@@ -4,7 +4,7 @@ plugins {
   id 'eclipse'
 }
 
-group = 'photosrenamer'
+group = 'us.fatehi'
 version = '1.3.0'  
 description = """Photos Renamer"""
 
@@ -24,24 +24,3 @@ application {
   mainClass.set("photosrenamer.Main")
 }
 
-
-defaultTasks 'build', 'makeDistribution'
-
-task makeDistribution(dependsOn: ['copyToLib', 'copyArtifact', 'copyShellScripts'])
-
-task copyToLib(type: Copy) {
-    from configurations.runtime
-    into "$buildDir/distribution/lib"
-}
-
-task copyArtifact(type: Copy) {
-    from "$buildDir/libs"
-    into "$buildDir/distribution/lib"
-}
-
-task copyShellScripts(type: Copy) {
-    from 'src/main/scripts'
-    into "$buildDir/distribution"
-    include '**/*.cmd'
-    include '**/*.sh'
-}
