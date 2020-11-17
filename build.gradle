@@ -1,10 +1,6 @@
 plugins {
-  // Apply the java plugin to add support for Java
-  id 'java'
-
   // Apply the application plugin to add support for building a CLI application.
   id 'application'
-    
   id 'eclipse'
 }
 
@@ -20,12 +16,12 @@ repositories {
 }
 
 dependencies {
-  compile group: 'com.drewnoakes', name: 'metadata-extractor', version:'2.8.1'
-  compile group: 'com.jgoodies', name: 'jgoodies-looks', version:'2.7.0'
+  implementation 'com.drewnoakes:metadata-extractor:2.8.1'
+  implementation 'com.jgoodies:jgoodies-looks:2.7.0'
 }
 
 application {
-  mainClassName = 'photosrenamer.Main'
+  mainClass.set("photosrenamer.Main")
 }
 
 
