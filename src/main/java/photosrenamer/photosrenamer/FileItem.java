@@ -14,7 +14,6 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -37,7 +36,6 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifDirectoryBase;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
-import com.drew.metadata.exif.ExifThumbnailDirectory;
 import com.drew.metadata.iptc.IptcDirectory;
 
 /**
@@ -54,9 +52,9 @@ public final class FileItem implements Serializable {
         return date2;
       } else if ((date2 == null) || date1.before(date2)) {
         return date1;
-      }else {
-      return date2;
-    }
+      } else {
+        return date2;
+      }
     }
 
     private boolean loadImageCommentFromMetadata(final IptcDirectory directory) {
@@ -100,23 +98,6 @@ public final class FileItem implements Serializable {
       return loaded;
     }
 
-    private boolean loadImageThumbnailFromMetadata(final ExifThumbnailDirectory directory) {
-      boolean thumbnailLoaded = false;
-      try {
-        if (directory.hasThumbnailData()) {
-          final byte[] bytes = directory.getThumbnailData();
-          final Image image = ImageIO.read(new ByteArrayInputStream(bytes));
-          if (image != null) {
-            thumbnail = new ImageIcon(scaleImage(image));
-            thumbnailLoaded = true;
-          }
-        }
-      } catch (final Exception e) {
-        logger.log(Level.FINE, FileItem.this.toString(), e);
-      }
-      return thumbnailLoaded;
-    }
-
     /**
      * {@inheritDoc}
      *
@@ -148,13 +129,8 @@ public final class FileItem implements Serializable {
         date = earliestDate(date3, date);
         date = earliestDate(date4, date);
 
-        final ExifThumbnailDirectory thumbnailDirectory =
-            metadata.getFirstDirectoryOfType(ExifThumbnailDirectory.class);
-        final boolean loadedImageThumbnailFromMetadata =
-            loadImageThumbnailFromMetadata(thumbnailDirectory);
-        if (!loadedImageThumbnailFromMetadata) {
-          loadImageThumbnail();
-        }
+        loadImageThumbnail();
+
       } catch (final Exception e) {
         logger.log(Level.FINE, FileItem.this.toString(), e);
       }
