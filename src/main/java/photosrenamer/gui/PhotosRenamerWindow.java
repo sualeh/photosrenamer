@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2016, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright (c) 2004-2020, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -9,8 +9,6 @@ package photosrenamer.gui;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -109,23 +107,11 @@ public final class PhotosRenamerWindow extends JFrame {
 
     final GuiAction up = new GuiAction("Move up", "/icons/up.gif");
     up.setShortcutKey(KeyStroke.getKeyStroke("alt UP"));
-    up.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(final ActionEvent e) {
-            fileItemSortList.move(FileItemSortList.Direction.UP);
-          }
-        });
+    up.addActionListener(e -> fileItemSortList.move(FileItemSortList.Direction.UP));
 
     final GuiAction down = new GuiAction("Move down", "/icons/down.gif");
     down.setShortcutKey(KeyStroke.getKeyStroke("alt DOWN"));
-    down.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(final ActionEvent e) {
-            fileItemSortList.move(FileItemSortList.Direction.DOWN);
-          }
-        });
+    down.addActionListener(e -> fileItemSortList.move(FileItemSortList.Direction.DOWN));
 
     menuActions.add(up);
     toolBar.add(up);
@@ -139,24 +125,12 @@ public final class PhotosRenamerWindow extends JFrame {
     final ButtonGroup sortingMenuItems = new ButtonGroup();
 
     final JRadioButtonMenuItem sortDates = new JRadioButtonMenuItem("Sort Files by Date");
-    sortDates.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(final ActionEvent actionevent) {
-            fileItemSortList.sort(FileComparator.BY_DATE);
-          }
-        });
+    sortDates.addActionListener(actionevent -> fileItemSortList.sort(FileComparator.BY_DATE));
     sortingMenuItems.add(sortDates);
     menuActions.add(sortDates);
 
     final JRadioButtonMenuItem sortNames = new JRadioButtonMenuItem("Sort Files by Name", true);
-    sortNames.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(final ActionEvent actionevent) {
-            fileItemSortList.sort(FileComparator.BY_NAME);
-          }
-        });
+    sortNames.addActionListener(actionevent -> fileItemSortList.sort(FileComparator.BY_NAME));
     sortingMenuItems.add(sortNames);
     menuActions.add(sortNames);
 
@@ -169,21 +143,18 @@ public final class PhotosRenamerWindow extends JFrame {
     final GuiAction renameAction = new GuiAction("Rename", "/icons/rename.gif");
     renameAction.setShortcutKey(KeyStroke.getKeyStroke("control R"));
     renameAction.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(final ActionEvent event) {
-            try {
-              final String fileStem = stemField.getText();
+        event -> {
+          try {
+            final String fileStem = stemField.getText();
 
-              final FilesRenamer filesRenamer =
-                  new FilesRenamer(fileItemSortList.getFiles(), fileStem);
-              filesRenamer.rename();
-            } catch (Exception e) {
-              logger.log(Level.SEVERE, e.getMessage(), e);
-            }
-
-            fileItemSortList.reload();
+            final FilesRenamer filesRenamer =
+                new FilesRenamer(fileItemSortList.getFiles(), fileStem);
+            filesRenamer.rename();
+          } catch (final Exception e) {
+            logger.log(Level.SEVERE, e.getMessage(), e);
           }
+
+          fileItemSortList.reload();
         });
     menuActions.add(renameAction);
     toolBar.add(renameAction);
@@ -197,25 +168,13 @@ public final class PhotosRenamerWindow extends JFrame {
 
     final GuiAction open = new GuiAction("Open", "/icons/open.gif");
     open.setShortcutKey(KeyStroke.getKeyStroke("control O"));
-    open.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(final ActionEvent actionevent) {
-            open();
-          }
-        });
+    open.addActionListener(actionevent -> open());
     menuFile.add(open);
     toolBar.add(open);
 
     final GuiAction close = new GuiAction("Close", "/icons/close.gif");
     close.setShortcutKey(KeyStroke.getKeyStroke("control W"));
-    close.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(final ActionEvent actionevent) {
-            close();
-          }
-        });
+    close.addActionListener(actionevent -> close());
     menuFile.add(close);
     toolBar.add(close);
 
@@ -235,16 +194,12 @@ public final class PhotosRenamerWindow extends JFrame {
     final GuiAction about = new GuiAction("About", "/icons/help.gif");
     about.setShortcutKey(KeyStroke.getKeyStroke("control H"));
     about.addActionListener(
-        new ActionListener() {
-          @Override
-          public void actionPerformed(final ActionEvent actionevent) {
+        actionevent ->
             JOptionPane.showMessageDialog(
                 PhotosRenamerWindow.this,
                 Version.about(),
                 Version.getProductName(),
-                JOptionPane.PLAIN_MESSAGE);
-          }
-        });
+                JOptionPane.PLAIN_MESSAGE));
     menuHelp.add(about);
 
     menuBar.add(menuHelp);

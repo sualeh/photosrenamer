@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2016, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright (c) 2004-2020, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -48,20 +48,13 @@ public final class FilesRenamer {
     this.fileStem = fileStem;
   }
 
-  public String getFileStem() {
-    return fileStem;
-  }
-
-  public void rename() {
-    final String pass1FileStem = UUID.randomUUID().toString();
-
-    final List<Path> pass1Files = makeRenamePass(files, pass1FileStem);
-    makeRenamePass(pass1Files, fileStem);
-  }
-
   private void closeFileLogger(final FileHandler handler) {
     handler.close();
     logger.removeHandler(handler);
+  }
+
+  public String getFileStem() {
+    return fileStem;
   }
 
   @SafeVarargs
@@ -140,5 +133,12 @@ public final class FilesRenamer {
       logger.log(Level.SEVERE, e.getMessage(), e);
       throw new RuntimeException(e);
     }
+  }
+
+  public void rename() {
+    final String pass1FileStem = UUID.randomUUID().toString();
+
+    final List<Path> pass1Files = makeRenamePass(files, pass1FileStem);
+    makeRenamePass(pass1Files, fileStem);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2016, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright (c) 2004-2020, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -49,59 +49,14 @@ public final class FileItem implements Serializable {
 
   private final class MetadataLoader implements Runnable {
 
-    /**
-     * {@inheritDoc}
-     *
-     * @see java.lang.Runnable#run()
-     */
-    @Override
-    public void run() {
-      logger.log(Level.FINEST, FileItem.this + ": Entered MetadataLoader");
-
-      try {
-        final Metadata metadata = ImageMetadataReader.readMetadata(file.toFile());
-
-        final ExifIFD0Directory exifDirectory =
-            metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-        final IptcDirectory iptcDirectory = metadata.getFirstDirectoryOfType(IptcDirectory.class);
-        final ExifSubIFDDirectory exifSubDirectory =
-            metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
-
-        loadImageCommentFromMetadata(iptcDirectory);
-
-        final Date date1 = loadImageDateFromMetadata(exifDirectory, ExifDirectoryBase.TAG_DATETIME);
-        final Date date2 = loadImageDateFromMetadata(iptcDirectory, IptcDirectory.TAG_DATE_CREATED);
-        final Date date3 =
-            loadImageDateFromMetadata(exifSubDirectory, ExifDirectoryBase.TAG_DATETIME_ORIGINAL);
-        final Date date4 = loadCreateDateFromFile();
-
-        date = earliestDate(date1, date);
-        date = earliestDate(date2, date);
-        date = earliestDate(date3, date);
-        date = earliestDate(date4, date);
-
-        final ExifThumbnailDirectory thumbnailDirectory =
-            metadata.getFirstDirectoryOfType(ExifThumbnailDirectory.class);
-        final boolean loadedImageThumbnailFromMetadata =
-            loadImageThumbnailFromMetadata(thumbnailDirectory);
-        if (!loadedImageThumbnailFromMetadata) {
-          loadImageThumbnail();
-        }
-      } catch (final Exception e) {
-        logger.log(Level.FINE, FileItem.this.toString(), e);
-      }
-    }
-
     private Date earliestDate(final Date date1, final Date date2) {
       if (date1 == null) {
         return date2;
-      } else if (date2 == null) {
+      } else if ((date2 == null) || date1.before(date2)) {
         return date1;
-      } else if (date1.before(date2)) {
-        return date1;
-      } else {
-        return date2;
-      }
+      }else {
+      return date2;
+    }
     }
 
     private boolean loadImageCommentFromMetadata(final IptcDirectory directory) {
@@ -160,6 +115,49 @@ public final class FileItem implements Serializable {
         logger.log(Level.FINE, FileItem.this.toString(), e);
       }
       return thumbnailLoaded;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Runnable#run()
+     */
+    @Override
+    public void run() {
+      logger.log(Level.FINEST, FileItem.this + ": Entered MetadataLoader");
+
+      try {
+        final Metadata metadata = ImageMetadataReader.readMetadata(file.toFile());
+
+        final ExifIFD0Directory exifDirectory =
+            metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+        final IptcDirectory iptcDirectory = metadata.getFirstDirectoryOfType(IptcDirectory.class);
+        final ExifSubIFDDirectory exifSubDirectory =
+            metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
+
+        loadImageCommentFromMetadata(iptcDirectory);
+
+        final Date date1 = loadImageDateFromMetadata(exifDirectory, ExifDirectoryBase.TAG_DATETIME);
+        final Date date2 = loadImageDateFromMetadata(iptcDirectory, IptcDirectory.TAG_DATE_CREATED);
+        final Date date3 =
+            loadImageDateFromMetadata(exifSubDirectory, ExifDirectoryBase.TAG_DATETIME_ORIGINAL);
+        final Date date4 = loadCreateDateFromFile();
+
+        date = earliestDate(date1, date);
+        date = earliestDate(date2, date);
+        date = earliestDate(date3, date);
+        date = earliestDate(date4, date);
+
+        final ExifThumbnailDirectory thumbnailDirectory =
+            metadata.getFirstDirectoryOfType(ExifThumbnailDirectory.class);
+        final boolean loadedImageThumbnailFromMetadata =
+            loadImageThumbnailFromMetadata(thumbnailDirectory);
+        if (!loadedImageThumbnailFromMetadata) {
+          loadImageThumbnail();
+        }
+      } catch (final Exception e) {
+        logger.log(Level.FINE, FileItem.this.toString(), e);
+      }
     }
 
     private Image scaleImage(final Image image) {
@@ -312,6 +310,18 @@ public final class FileItem implements Serializable {
     return result;
   }
 
+  private Date loadCreateDateFromFile() {
+    try {
+      final BasicFileAttributes attributes = Files.readAttributes(file, BasicFileAttributes.class);
+      final FileTime creationTime = attributes.creationTime();
+
+      return new Date(creationTime.toMillis());
+    } catch (final IOException e) {
+      logger.log(Level.FINE, FileItem.this.toString(), e);
+    }
+    return null;
+  }
+
   /** Loads image metadata, such as comment and thumbnail. */
   public void loadMetadata() {
     if (!metadataLoaded) {
@@ -338,17 +348,5 @@ public final class FileItem implements Serializable {
   @Override
   public String toString() {
     return "FileItem [file=" + file + ", date=" + date + ", comment=" + comment + "]";
-  }
-
-  private Date loadCreateDateFromFile() {
-    try {
-      final BasicFileAttributes attributes = Files.readAttributes(file, BasicFileAttributes.class);
-      final FileTime creationTime = attributes.creationTime();
-
-      return new Date(creationTime.toMillis());
-    } catch (final IOException e) {
-      logger.log(Level.FINE, FileItem.this.toString(), e);
-    }
-    return null;
   }
 }
