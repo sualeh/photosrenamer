@@ -43,8 +43,12 @@ import sf.util.ui.GuiAction;
  */
 public final class PhotosRenamerWindow extends JFrame {
 
-  private static final Logger logger = Logger.getGlobal();
   private static final long serialVersionUID = -1635298990546339443L;
+
+  private static final Logger logger = Logger.getGlobal();
+
+  private static final int WINDOW_HEIGHT = 800;
+  private static final int WINDOW_WIDTH = 500;
 
   private static final Preferences preferences =
       Preferences.userNodeForPackage(PhotosRenamerWindow.class);
@@ -60,7 +64,6 @@ public final class PhotosRenamerWindow extends JFrame {
   }
 
   private Path workingDir;
-
   private final FileItemSortList fileItemSortList;
   private final JLabel directoryBar;
 
@@ -81,7 +84,7 @@ public final class PhotosRenamerWindow extends JFrame {
     panel.add(directoryBar, BorderLayout.SOUTH);
 
     fileItemSortList = new FileItemSortList();
-    fileItemSortList.setPreferredSize(new Dimension(400, 600));
+    fileItemSortList.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
     panel.add(fileItemSortList, BorderLayout.CENTER);
 
     final JMenuBar menuBar = new JMenuBar();

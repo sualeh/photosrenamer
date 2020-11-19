@@ -6,6 +6,7 @@
  */
 package photosrenamer.photosrenamer;
 
+import java.time.Instant;
 import java.util.Comparator;
 
 /**
@@ -31,9 +32,9 @@ public enum FileComparator implements Comparator<FileItem> {
         final String filename2 = file2.getFile().toString();
         return nameComparator.compare(filename1, filename2);
       case BY_DATE:
-        final long filetime1 = file1.getDate().getTime();
-        final long filetime2 = file2.getDate().getTime();
-        return (int) Math.signum((double) (filetime1 - filetime2));
+        final Instant instant1 = file1.getCreationInstant();
+        final Instant instant2 = file2.getCreationInstant();
+        return instant1.compareTo(instant2);
       default:
         return 0;
     }

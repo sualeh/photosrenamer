@@ -20,10 +20,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,14 +48,12 @@ public final class FileItem implements Serializable {
 
   private final class MetadataLoader implements Runnable {
 
-    private Date earliestDate(final Date date1, final Date date2) {
-      if (date1 == null) {
-        return date2;
-      } else if ((date2 == null) || date1.before(date2)) {
-        return date1;
-      } else {
-        return date2;
-      }
+    private Instant earliestInstant(final Instant instant1, final Instant instant2) {
+      if ((instant1 == null) || !(instant2 == null || instant1.isBefore(instant2))) {
+        return instant2;
+      }else {
+      return instant1;
+    }
     }
 
     private boolean loadImageCommentFromMetadata(final IptcDirectory directory) {
@@ -66,20 +65,20 @@ public final class FileItem implements Serializable {
       return loaded;
     }
 
-    private Date loadImageDateFromMetadata(final Directory directory, final int tag) {
-      Date date = null;
+    private Instant loadImageCreationInstantFromMetadata(final Directory directory, final int tag) {
+      Instant instant = null;
       try {
         if (directory != null && directory.containsTag(tag)) {
-          date = directory.getDate(tag);
-          final LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+          instant = directory.getDate(tag).toInstant();
+          final LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
           if (localDate.isBefore(LocalDate.of(1970, 1, 1))) {
-            date = null;
+            instant = null;
           }
         }
       } catch (final Exception e) {
         logger.log(Level.FINE, FileItem.this.toString(), e);
       }
-      return date;
+      return instant;
     }
 
     private boolean loadImageThumbnail() {
@@ -118,16 +117,19 @@ public final class FileItem implements Serializable {
 
         loadImageCommentFromMetadata(iptcDirectory);
 
-        final Date date1 = loadImageDateFromMetadata(exifDirectory, ExifDirectoryBase.TAG_DATETIME);
-        final Date date2 = loadImageDateFromMetadata(iptcDirectory, IptcDirectory.TAG_DATE_CREATED);
-        final Date date3 =
-            loadImageDateFromMetadata(exifSubDirectory, ExifDirectoryBase.TAG_DATETIME_ORIGINAL);
-        final Date date4 = loadCreateDateFromFile();
+        final Instant instant1 =
+            loadImageCreationInstantFromMetadata(exifDirectory, ExifDirectoryBase.TAG_DATETIME);
+        final Instant instant2 =
+            loadImageCreationInstantFromMetadata(iptcDirectory, IptcDirectory.TAG_DATE_CREATED);
+        final Instant instant3 =
+            loadImageCreationInstantFromMetadata(
+                exifSubDirectory, ExifDirectoryBase.TAG_DATETIME_ORIGINAL);
+        final Instant instant4 = loadCreationInstantFromFile();
 
-        date = earliestDate(date1, date);
-        date = earliestDate(date2, date);
-        date = earliestDate(date3, date);
-        date = earliestDate(date4, date);
+        creationInstant = earliestInstant(instant1, creationInstant);
+        creationInstant = earliestInstant(instant2, creationInstant);
+        creationInstant = earliestInstant(instant3, creationInstant);
+        creationInstant = earliestInstant(instant4, creationInstant);
 
         loadImageThumbnail();
 
@@ -165,6 +167,9 @@ public final class FileItem implements Serializable {
     }
   }
 
+  private static final DateTimeFormatter dateTimeFormatter =
+      DateTimeFormatter.ISO_LOCAL_DATE_TIME.withZone(ZoneId.from(ZoneOffset.UTC));
+
   /** Default icon, until the image is loaded. */
   public static final ImageIcon DEFAULT_IMAGE_ICON = createDefaultImageIcon();
 
@@ -172,10 +177,8 @@ public final class FileItem implements Serializable {
 
   private static final long serialVersionUID = -4057318666488966541L;
 
-  private static final int IMAGE_WIDTH = 150;
-
+  private static final int IMAGE_WIDTH = 180;
   private static final int IMAGE_HEIGHT = (int) (IMAGE_WIDTH * 2F / 3F);
-  private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
   private static ImageIcon createDefaultImageIcon() {
 
@@ -197,7 +200,7 @@ public final class FileItem implements Serializable {
   }
 
   private final Path file;
-  private Date date;
+  private Instant creationInstant;
   private ImageIcon thumbnail;
   private String comment;
   private boolean metadataLoaded;
@@ -215,7 +218,7 @@ public final class FileItem implements Serializable {
 
     thumbnail = DEFAULT_IMAGE_ICON;
 
-    date = loadCreateDateFromFile();
+    creationInstant = loadCreationInstantFromFile();
 
     comment = "";
   }
@@ -247,12 +250,12 @@ public final class FileItem implements Serializable {
   }
 
   /**
-   * Gets the file date.
+   * Gets the file creation instant.
    *
-   * @return File date.
+   * @return File creation instant.
    */
-  public Date getDate() {
-    return new Date(date.getTime());
+  public Instant getCreationInstant() {
+    return creationInstant;
   }
 
   /**
@@ -282,16 +285,16 @@ public final class FileItem implements Serializable {
   public int hashCode() {
     int result;
     result = file.hashCode();
-    result = 29 * result + date.hashCode();
+    result = 29 * result + creationInstant.hashCode();
     return result;
   }
 
-  private Date loadCreateDateFromFile() {
+  private Instant loadCreationInstantFromFile() {
     try {
       final BasicFileAttributes attributes = Files.readAttributes(file, BasicFileAttributes.class);
       final FileTime creationTime = attributes.creationTime();
 
-      return new Date(creationTime.toMillis());
+      return creationTime.toInstant();
     } catch (final IOException e) {
       logger.log(Level.FINE, FileItem.this.toString(), e);
     }
@@ -308,7 +311,7 @@ public final class FileItem implements Serializable {
   }
 
   public String toHtml() {
-    final String dateString = dateFormat.format(date);
+    final String dateString = dateTimeFormatter.format(creationInstant);
     final String toolTip =
         "<html>"
             + "<b>File:</b> "
@@ -323,6 +326,6 @@ public final class FileItem implements Serializable {
 
   @Override
   public String toString() {
-    return "FileItem [file=" + file + ", date=" + date + ", comment=" + comment + "]";
+    return "FileItem [file=" + file + ", created=" + creationInstant + ", comment=" + comment + "]";
   }
 }
