@@ -42,11 +42,11 @@ jobs:
       run: |
         # Build
         mvn --no-transfer-progress --batch-mode package
-        jpackage --verbose "@jpackage.cfg" "@jpackage-windows.cfg"
         mkdir package
         cp target/photosrenamer-1.4.1-complete.jar package/
         mkdir installer
         ls -l package/
+        jpackage --verbose "@jpackage.cfg" "@jpackage-windows.cfg"
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
     - id: create-release
