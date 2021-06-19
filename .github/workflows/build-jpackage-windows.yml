@@ -41,10 +41,7 @@ jobs:
       name: Build distribution
       run: |
         # Build
-        mvn \
-          --no-transfer-progress \
-          --batch-mode \
-          package
+        mvn --no-transfer-progress --batch-mode package
         jpackage --verbose "@jpackage.cfg" "@jpackage-windows.cfg"
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
