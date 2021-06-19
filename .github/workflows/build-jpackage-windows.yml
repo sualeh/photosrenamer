@@ -44,7 +44,7 @@ jobs:
         mvn --no-transfer-progress --batch-mode package
         jpackage --verbose "@jpackage.cfg" "@jpackage-windows.cfg"
         mkdir package
-        cp photosrenamer-1.4.1-complete.jar package
+        cp target/photosrenamer-1.4.1-complete.jar package
         mkdir installer
 
 # CREATE GITHUB RELEASE AND ADD ASSETS
