@@ -7,4 +7,3 @@ build/
 bin/
 .gradle
 target/
-launch.json
