@@ -31,25 +31,6 @@ release:
     owner: sualeh
     name: Sualeh Fatehi
     username: sualeh
-announce:
-  twitter:
-    active: ALWAYS
-    status: "🚀 Photos Renamer {{projectVersion}} has been released! https://github.com/sualeh/photosrenamer/releases/tag/v{{projectVersion}} #OpenSource #Java"
-packagers:
-  chocolatey:
-    active: ALWAYS
-    continueOnError: true
-    downloadUrl:  https://github.com/sualeh/photosrenamer/releases/download/v{{projectVersion}}/schemacrawler-{{projectVersion}}-bin.zip
-    username: sualeh
-    title: Photos Renamer
-    iconUrl: https://www.schemacrawler.com/images/schemacrawler_logo.png
-  sdkman:
-    active: ALWAYS
-    continueOnError: true
-    downloadUrl:  https://github.com/sualeh/photosrenamer/releases/download/v{{projectVersion}}/schemacrawler-{{projectVersion}}-bin.zip
-    candidate: schemacrawler
-    command: MAJOR
-    releaseNotesUrl: https://github.com/sualeh/photosrenamer/commits/master
 distributions:
   schemacrawler:
     active: ALWAYS
