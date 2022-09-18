@@ -15,10 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
@@ -36,18 +32,19 @@ jobs:
           package
 
 # CREATE A RELEASE WITH JRELEASER
-      - id: run-jreleaser
-        name: Run JReleaser
-        uses: jreleaser/release-action@v2
-        env:
-          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - id: run-jreleaser
+      name: Run JReleaser
+      uses: jreleaser/release-action@v2
+      env:
+        JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Persist JReleaser logs
-      - id: persist-jreleaser-logs
-        name: Persist JReleaser logs
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: jreleaser-release
-          path: |
-            out/jreleaser/trace.log
-            out/jreleaser/output.properties
+    - id: persist-jreleaser-logs
+      name: Persist JReleaser logs
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: jreleaser-release
+        path: |
+          out/jreleaser/trace.log
+          out/jreleaser/output.properties
+
