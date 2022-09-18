@@ -4,7 +4,7 @@
   "version": "1.4.2",
   "license": "CC-BY-NC-ND-3.0",
   "url": "https://github.com/sualeh/photosrenamer/releases/download/v1.4.2/photosrenamer-1.4.2-bin.zip",
-  "hash": "sha256:1b0acc3e0b85a47d298aa69dcfdb66abae20c6be68de93490f0e14e510e5c5cb",
+  "hash": "sha256:ac93f454ac84a01ea7b9ee700b8575dd02bb20818bb8ad878995f34628361345",
   "extract_dir": "photosrenamer-1.4.2-bin",
   "env_add_path": "bin",
   "suggest": {
