@@ -25,6 +25,7 @@ project:
   tags:
     - java
   versionPattern: SEMVER
+  stereotype: DESKTOP  
 release:
   github:
     owner: sualeh
@@ -54,8 +55,6 @@ distributions:
     active: ALWAYS
     type: JAVA_BINARY
     executable: 
-      name: schemacrawler
-      unixExtension: sh
-      windowsExtension: cmd
+      name: photosrenamer
     artifacts:
-      - path: ./{{distributionName}}-{{projectVersion}}-bin.zip
+      - path: ./target/{{distributionName}}-{{projectVersion}}-bin.zip
