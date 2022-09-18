@@ -1,0 +1,61 @@
+project:
+  name: Photos Renamer
+  version: 1.4.2
+  description: Application to sort camera photos by the EXIF date, and rename them.
+  longDescription: >
+    Photos Renamer is a Java-based desktop application that will allow you to visually
+    sort your photos. You can select one or many photos, and move them up or down as a
+    group using keyboard shortcut keys. There are several automatic sort options too,
+    such as by filename or by the date in the EXIF data in the image. After you are done
+    sorting, you can rename all of the photos with a prefix, and Photos Renamer will
+    number them.
+  copyright: Copyright (c) 2004-2022, Sualeh Fatehi.
+  inceptionYear: 2004
+  links: 
+    homepage: https://github.com/sualeh/photosrenamer
+  authors:
+    - Sualeh Fatehi
+  vendor: Sualeh Fatehi
+  license: CC-BY-NC-ND-3.0
+  java:
+    groupId: us.fatehi
+    artifactId: photosrenamer
+    version: 8
+    mainClass: photosrenamer.Main
+  tags:
+    - java
+  versionPattern: SEMVER
+release:
+  github:
+    owner: sualeh
+    name: Sualeh Fatehi
+    username: sualeh
+announce:
+  twitter:
+    active: ALWAYS
+    status: "🚀 Photos Renamer {{projectVersion}} has been released! https://github.com/sualeh/photosrenamer/releases/tag/v{{projectVersion}} #OpenSource #Java"
+packagers:
+  chocolatey:
+    active: ALWAYS
+    continueOnError: true
+    downloadUrl:  https://github.com/sualeh/photosrenamer/releases/download/v{{projectVersion}}/schemacrawler-{{projectVersion}}-bin.zip
+    username: sualeh
+    title: Photos Renamer
+    iconUrl: https://www.schemacrawler.com/images/schemacrawler_logo.png
+  sdkman:
+    active: ALWAYS
+    continueOnError: true
+    downloadUrl:  https://github.com/sualeh/photosrenamer/releases/download/v{{projectVersion}}/schemacrawler-{{projectVersion}}-bin.zip
+    candidate: schemacrawler
+    command: MAJOR
+    releaseNotesUrl: https://github.com/sualeh/photosrenamer/commits/master
+distributions:
+  schemacrawler:
+    active: ALWAYS
+    type: JAVA_BINARY
+    executable: 
+      name: schemacrawler
+      unixExtension: sh
+      windowsExtension: cmd
+    artifacts:
+      - path: ./{{distributionName}}-{{projectVersion}}-bin.zip
