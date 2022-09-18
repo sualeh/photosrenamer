@@ -42,3 +42,7 @@ distributions:
       name: photosrenamer
     artifacts:
       - path: ./target/{{distributionName}}-{{projectVersion}}-bin.zip
+    scoop:
+      active: always
+      bucket:
+        active: release
