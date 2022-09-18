@@ -150,10 +150,9 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>appassembler-maven-plugin</artifactId>
         <configuration>
-          <platforms>
-            <platform>windows</platform>
-            <platform>unix</platform>
-          </platforms>
+          <repositoryLayout>flat</repositoryLayout>
+          <repositoryName>lib</repositoryName>
+		  <showConsoleWindow>false</showConsoleWindow>
           <programs>
             <program>
               <mainClass>photosrenamer.Main</mainClass>
