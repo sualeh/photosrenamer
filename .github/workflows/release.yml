@@ -41,7 +41,7 @@ jobs:
     - id: persist-jreleaser-logs
       name: Persist JReleaser logs
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: jreleaser-release
         path: |
