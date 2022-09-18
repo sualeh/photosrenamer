@@ -11,7 +11,7 @@ project:
     number them.
   copyright: Copyright (c) 2004-2022, Sualeh Fatehi.
   inceptionYear: 2004
-  links: 
+  links:
     homepage: https://github.com/sualeh/photosrenamer
   authors:
     - Sualeh Fatehi
@@ -25,17 +25,20 @@ project:
   tags:
     - java
   versionPattern: SEMVER
-  stereotype: DESKTOP  
+  stereotype: DESKTOP
 release:
   github:
     owner: sualeh
-    name: Sualeh Fatehi
+    name: photosrenamer
     username: sualeh
+    commitAuthor:
+      name: sualeh
+      email: sualeh@hotmail.com
 distributions:
   photosrenamer:
     active: ALWAYS
     type: JAVA_BINARY
-    executable: 
+    executable:
       name: photosrenamer
     artifacts:
       - path: ./target/{{distributionName}}-{{projectVersion}}-bin.zip
