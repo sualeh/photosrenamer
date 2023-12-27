@@ -47,7 +47,7 @@ distributions:
       commitAuthor:
         name: sualeh
         email: sualeh@hotmail.com
-      bucket:
+      repository:
         active: ALWAYS
         owner: sualeh
         name: photosrenamer
@@ -61,3 +61,5 @@ distributions:
         email: sualeh@hotmail.com
       repository:
         active: ALWAYS
+      package:
+        identifier: sualeh.photosrenamer
