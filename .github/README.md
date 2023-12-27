@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sualeh/photosrenamer.svg?branch=master)](https://travis-ci.org/sualeh/photosrenamer)
+[![Build Status](https://github.com/sualeh/photosrenamer/actions/workflows/quick_build.yml/badge.svg)](https://github.com/sualeh/photosrenamer/actions/workflows/quick_build.yml)
 
 # Photos Renamer
 
