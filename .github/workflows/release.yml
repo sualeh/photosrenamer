@@ -19,11 +19,7 @@ jobs:
 # SETUP BUILD ENVIRONMENT
     - id: prepare-maven-build
       name: Prepare Maven build
-<<<<<<< Updated upstream
       uses: sualeh/prepare-maven-build@v1.3.5
-=======
-      uses: sualeh/prepare-maven-build@v1.3.3
->>>>>>> Stashed changes
 
 # BUILD AND TEST
     - id: build-test
