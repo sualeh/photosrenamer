@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2024, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright (c) 2004-2025, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -51,9 +51,9 @@ public final class FileItem implements Serializable {
     private Instant earliestInstant(final Instant instant1, final Instant instant2) {
       if ((instant1 == null) || !(instant2 == null || instant1.isBefore(instant2))) {
         return instant2;
-      }else {
-      return instant1;
-    }
+      } else {
+        return instant1;
+      }
     }
 
     private boolean loadImageCommentFromMetadata(final IptcDirectory directory) {
