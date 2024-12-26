@@ -1,10 +1,10 @@
 {
-  "homepage": "https://github.com/sualeh/photosrenamer",
-  "description": "Application to sort camera photos by the EXIF date, and rename them.",
   "version": "1.4.4",
+  "description": "Application to sort camera photos by the EXIF date, and rename them.",
+  "homepage": "https://github.com/sualeh/photosrenamer",
   "license": "CC-BY-NC-ND-3.0",
   "url": "https://github.com/sualeh/photosrenamer/releases/download/v1.4.4/photosrenamer-1.4.4-bin.zip",
-  "hash": "sha256:e71a3d904ff6d6769a1ba3de3913cdc53c63f2c9ebb54a800b3062bb11333ad4",
+  "hash": "sha256:82a2a6bae38d8075e190bebedd76bf13ca9f823337b33d3289c52012c88ec0ff",
   "extract_dir": "photosrenamer-1.4.4-bin",
   "env_add_path": "bin",
   "suggest": {
