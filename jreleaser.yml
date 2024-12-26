@@ -26,6 +26,7 @@ project:
     - java
   versionPattern: SEMVER
   stereotype: DESKTOP
+
 release:
   github:
     owner: sualeh
@@ -36,6 +37,7 @@ release:
     commitAuthor:
       name: 'Sualeh Fatehi'
       email: sualeh@hotmail.com
+
 distributions:
   photosrenamer:
     active: ALWAYS
@@ -56,12 +58,12 @@ distributions:
         # branch: main
         username: sualeh
         commitMessage: 'Scoop manifest for {{distributionName}} {{tagName}}'
-  winget:
-    active: ALWAYS
-    repository:
-      owner: sualeh
-      name: photosrenamer
-    distribution:
-      type: java
-      format: single-jar
-      executable: ./target/{{distributionName}}-{{projectVersion}}-complete.jar
+    winget:
+      active: ALWAYS
+      repository:
+        owner: sualeh
+        name: photosrenamer
+      distribution:
+        type: java
+        format: single-jar
+        executable: ./target/{{distributionName}}-{{projectVersion}}-complete.jar
