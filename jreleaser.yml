@@ -56,17 +56,3 @@ distributions:
         branch: main
         username: sualeh
         commitMessage: 'Scoop manifest for {{distributionName}} {{tagName}}'
-    winget:
-      active: ALWAYS
-      repository:
-        owner: sualeh
-        name: photosrenamer
-        branch: main
-        commitAuthor:
-          name: sualeh
-          email: sualeh@hotmail.com
-        commitMessage: 'Winget manifest for {{distributionName}} {{tagName}}'
-      repository:
-        active: ALWAYS
-      package:
-        identifier: sualeh.photosrenamer
