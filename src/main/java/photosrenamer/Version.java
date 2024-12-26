@@ -15,7 +15,7 @@ package photosrenamer;
 public final class Version {
 
   private static final String PRODUCTNAME = "Photos Renamer";
-  private static final String VERSION = "1.4.3";
+  private static final String VERSION = "1.4.4";
 
   /**
    * Information about this product.

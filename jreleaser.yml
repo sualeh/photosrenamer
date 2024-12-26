@@ -1,6 +1,6 @@
 project:
   name: Photos Renamer
-  version: 1.4.3
+  version: 1.4.4
   description: Application to sort camera photos by the EXIF date, and rename them.
   longDescription: >
     Photos Renamer is a Java-based desktop application that will allow you to visually
@@ -9,7 +9,7 @@ project:
     such as by filename or by the date in the EXIF data in the image. After you are done
     sorting, you can rename all of the photos with a prefix, and Photos Renamer will
     number them.
-  copyright: Copyright (c) 2004-2024, Sualeh Fatehi.
+  copyright: Copyright (c) 2004-2025, Sualeh Fatehi.
   inceptionYear: 2004
   links:
     homepage: https://github.com/sualeh/photosrenamer

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.fatehi</groupId>
   <artifactId>photosrenamer</artifactId>
-  <version>1.4.3</version>
+  <version>1.4.4</version>
   <packaging>jar</packaging>
   <name>Photos Renamer</name>
   <description>Application to sort camera photos by the EXIF date, and rename them.</description>
