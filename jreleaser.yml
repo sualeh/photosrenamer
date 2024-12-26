@@ -52,7 +52,7 @@ distributions:
       repository:
         active: ALWAYS
         owner: sualeh
-        # name: photosrenamer
-        branch: main
+        name: photosrenamer
+        # branch: main
         username: sualeh
         commitMessage: 'Scoop manifest for {{distributionName}} {{tagName}}'
