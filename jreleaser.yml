@@ -56,7 +56,6 @@ distributions:
         # branch: main
         username: sualeh
         commitMessage: 'Scoop manifest for {{distributionName}} {{tagName}}'
-packagers:
   winget:
     active: ALWAYS
     repository:

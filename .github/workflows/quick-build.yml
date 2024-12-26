@@ -11,6 +11,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: read-all
+
 jobs:
   build:
     name: Quick build
@@ -21,13 +23,16 @@ jobs:
     - id: prepare-maven-build
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.4.0
+      with:
+        java-version: 8
 
 # BUILD AND TEST
     - id: build-test
       name: Build all modules and run tests
+      shell: bash
       run: |
         # Build
         mvn \
           --no-transfer-progress \
           --batch-mode \
-          package
+          clean package
