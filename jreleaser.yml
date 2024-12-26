@@ -31,8 +31,10 @@ release:
     owner: sualeh
     name: photosrenamer
     username: sualeh
+    overwrite: true
+    releaseName: '{{tagName}}'
     commitAuthor:
-      name: sualeh
+      name: 'Sualeh Fatehi'
       email: sualeh@hotmail.com
 distributions:
   photosrenamer:
@@ -45,20 +47,25 @@ distributions:
     scoop:
       active: always
       commitAuthor:
-        name: sualeh
+        name: 'Sualeh Fatehi'
         email: sualeh@hotmail.com
       repository:
         active: ALWAYS
         owner: sualeh
-        name: photosrenamer
+        # name: photosrenamer
         branch: main
         username: sualeh
         commitMessage: 'Scoop manifest for {{distributionName}} {{tagName}}'
     winget:
-      active: always
-      commitAuthor:
-        name: sualeh
-        email: sualeh@hotmail.com
+      active: ALWAYS
+      repository:
+        owner: sualeh
+        name: photosrenamer
+        branch: main
+        commitAuthor:
+          name: sualeh
+          email: sualeh@hotmail.com
+        commitMessage: 'Winget manifest for {{distributionName}} {{tagName}}'
       repository:
         active: ALWAYS
       package:
