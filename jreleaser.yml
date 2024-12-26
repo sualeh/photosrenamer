@@ -58,12 +58,3 @@ distributions:
         # branch: main
         username: sualeh
         commitMessage: 'Scoop manifest for {{distributionName}} {{tagName}}'
-    winget:
-      active: ALWAYS
-      repository:
-        owner: sualeh
-        name: photosrenamer
-      distribution:
-        type: java
-        format: single-jar
-        executable: ./target/{{distributionName}}-{{projectVersion}}-complete.jar
