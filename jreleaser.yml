@@ -20,7 +20,7 @@ project:
   java:
     groupId: us.fatehi
     artifactId: photosrenamer
-    version: 21
+    version: 17
     mainClass: photosrenamer.Main
   tags:
     - java
