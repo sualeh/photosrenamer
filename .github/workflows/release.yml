@@ -1,5 +1,8 @@
 name: Create Release
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
   push:
@@ -11,9 +14,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  release:
     name: Create Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to create a new tag
     steps:
 
 # VALIDATE TAGS
@@ -34,7 +39,9 @@ jobs:
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.6.1
       with:
-        java-version: 8
+        java-version: 17
+        gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+        gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
 # BUILD FOR DISTRIBUTION
     - id: build
