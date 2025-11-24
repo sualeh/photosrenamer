@@ -8,6 +8,7 @@ package sf.util.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -22,7 +23,7 @@ import javax.swing.event.EventListenerList;
  */
 public class GuiAction extends AbstractAction {
 
-  private static final long serialVersionUID = -5319269508462388520L;
+  @Serial private static final long serialVersionUID = -5319269508462388520L;
 
   private static final Logger logger = Logger.getGlobal();
 

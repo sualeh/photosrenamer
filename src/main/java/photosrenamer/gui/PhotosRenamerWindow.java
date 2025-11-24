@@ -10,8 +10,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.Serial;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -41,7 +41,7 @@ import sf.util.ui.GuiAction;
  */
 public final class PhotosRenamerWindow extends JFrame {
 
-  private static final long serialVersionUID = -1635298990546339443L;
+  @Serial private static final long serialVersionUID = -1635298990546339443L;
 
   private static final Logger logger = Logger.getGlobal();
 
@@ -58,7 +58,7 @@ public final class PhotosRenamerWindow extends JFrame {
    */
   private static Path loadWorkingDirectory() {
     final String directory = preferences.get("WorkingDirectory", ".");
-    return Paths.get(directory).toAbsolutePath();
+    return Path.of(directory).toAbsolutePath();
   }
 
   private Path workingDir;

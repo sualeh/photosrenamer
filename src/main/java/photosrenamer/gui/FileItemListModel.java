@@ -7,6 +7,7 @@
 package photosrenamer.gui;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,7 +24,7 @@ import photosrenamer.photosrenamer.FileItem;
 
 public class FileItemListModel extends AbstractListModel<FileItem> {
 
-  private static final long serialVersionUID = 4050810987907022589L;
+  @Serial private static final long serialVersionUID = 4050810987907022589L;
 
   private static final Logger logger = Logger.getGlobal();
 

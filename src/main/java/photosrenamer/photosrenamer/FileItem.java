@@ -22,6 +22,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -173,7 +174,7 @@ public final class FileItem implements Serializable {
 
   private static final Logger logger = Logger.getGlobal();
 
-  private static final long serialVersionUID = -4057318666488966541L;
+  @Serial private static final long serialVersionUID = -4057318666488966541L;
 
   private static final int IMAGE_WIDTH = 180;
   private static final int IMAGE_HEIGHT = (int) (IMAGE_WIDTH * 2F / 3F);

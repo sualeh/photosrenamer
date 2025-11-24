@@ -6,6 +6,7 @@
  */
 package sf.util.ui;
 
+import java.io.Serial;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
@@ -16,7 +17,7 @@ import javax.swing.KeyStroke;
  */
 public final class ExitAction extends GuiAction {
 
-  private static final long serialVersionUID = 5749903957626188378L;
+  @Serial private static final long serialVersionUID = 5749903957626188378L;
 
   /**
    * Exits an application

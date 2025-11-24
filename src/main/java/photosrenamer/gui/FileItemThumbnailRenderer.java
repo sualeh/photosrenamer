@@ -7,6 +7,7 @@
 package photosrenamer.gui;
 
 import java.awt.Component;
+import java.io.Serial;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.SwingWorker;
@@ -19,7 +20,7 @@ import photosrenamer.photosrenamer.FileItem;
  */
 class FileItemThumbnailRenderer extends DefaultListCellRenderer {
 
-  private static final long serialVersionUID = -8276388250252139874L;
+  @Serial private static final long serialVersionUID = -8276388250252139874L;
 
   /**
    * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.swing.JList,

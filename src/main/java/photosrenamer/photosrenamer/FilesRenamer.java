@@ -70,7 +70,7 @@ public final class FilesRenamer {
         if (j > 0) {
           buffer.append(" -> ");
         }
-        buffer.append(String.format("%s", files[j].get(i).toFile().getName()));
+        buffer.append("%s".formatted(files[j].get(i).toFile().getName()));
       }
       buffer.append("\n");
     }
@@ -95,20 +95,19 @@ public final class FilesRenamer {
 
         i = i + 1;
         final Path renamedFile =
-            file.resolveSibling(String.format("%s_%04d.%s", fileStem, i, extension));
+            file.resolveSibling("%s_%04d.%s".formatted(fileStem, i, extension));
 
         Files.move(file, renamedFile, StandardCopyOption.ATOMIC_MOVE);
         renamedFiles.add(renamedFile);
       } catch (final Exception e) {
         final FileHandler handler = openFileLogger();
 
-        logger.log(Level.SEVERE, String.format("Error while renaming %s\n", file.toString()));
+        logger.log(Level.SEVERE, "Error while renaming %s\n".formatted(file.toString()));
 
         logger.log(
             Level.INFO,
-            String.format(
-                "Final file stem: \"%s\"; Current pass file stem: \"%s\"\n",
-                this.fileStem, fileStem));
+            "Final file stem: \"%s\"; Current pass file stem: \"%s\"\n"
+                .formatted(this.fileStem, fileStem));
         logFiles(files);
         logFiles(files, renamedFiles);
         logger.log(Level.SEVERE, e.getMessage(), e);

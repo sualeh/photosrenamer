@@ -7,6 +7,7 @@
 package photosrenamer.gui;
 
 import java.awt.BorderLayout;
+import java.io.Serial;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -28,7 +29,7 @@ public class FileItemSortList extends JPanel {
     DOWN,
   }
 
-  private static final long serialVersionUID = -584520624711792397L;
+  @Serial private static final long serialVersionUID = -584520624711792397L;
 
   private final JList<FileItem> list;
   private final FileItemListModel listModel;
