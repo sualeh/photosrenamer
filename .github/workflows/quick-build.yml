@@ -11,12 +11,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions: read-all
-
 jobs:
   build:
     name: Quick build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
 
 # SETUP BUILD ENVIRONMENT
@@ -24,7 +24,7 @@ jobs:
       name: Prepare Maven build
       uses: sualeh/prepare-maven-build@v1.6.1
       with:
-        java-version: 21
+        java-version: 17
 
 # BUILD AND TEST
     - id: build-test

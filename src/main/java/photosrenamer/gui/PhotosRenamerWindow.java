@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2025, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright (c) 2004-2026, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -10,12 +10,11 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.Serial;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
-
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -29,7 +28,6 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
-
 import photosrenamer.Version;
 import photosrenamer.photosrenamer.FileComparator;
 import photosrenamer.photosrenamer.FilesRenamer;
@@ -43,7 +41,7 @@ import sf.util.ui.GuiAction;
  */
 public final class PhotosRenamerWindow extends JFrame {
 
-  private static final long serialVersionUID = -1635298990546339443L;
+  @Serial private static final long serialVersionUID = -1635298990546339443L;
 
   private static final Logger logger = Logger.getGlobal();
 
@@ -60,7 +58,7 @@ public final class PhotosRenamerWindow extends JFrame {
    */
   private static Path loadWorkingDirectory() {
     final String directory = preferences.get("WorkingDirectory", ".");
-    return Paths.get(directory).toAbsolutePath();
+    return Path.of(directory).toAbsolutePath();
   }
 
   private Path workingDir;

@@ -1,14 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>us.fatehi</groupId>
   <artifactId>photosrenamer</artifactId>
-  <version>1.4.4</version>
+  <version>1.5.0</version>
   <packaging>jar</packaging>
+
   <name>Photos Renamer</name>
   <description>Application to sort camera photos by the EXIF date, and rename them.</description>
+
   <url>https://github.com/sualeh/photosrenamer</url>
+  <organization>
+    <name>Sualeh Fatehi</name>
+  </organization>
   <licenses>
     <license>
       <name>Eclipse Public License - v 1.0</name>
@@ -27,14 +33,22 @@
       <timezone>-5</timezone>
     </developer>
   </developers>
-  <organization>
-    <name>Sualeh Fatehi</name>
-  </organization>
   <scm>
     <url>https://github.com/sualeh/photosrenamer</url>
     <connection>scm:git:git@github.com:sualeh/photosrenamer.git</connection>
-    <developerConnection>scm:git:git@github.com:sualeh/photosrenamer.git</developerConnection>
   </scm>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>sonatype-nexus</id>
+      <name>Sonatype Nexus</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+    </repository>
+  </distributionManagement>
   <dependencies>
     <dependency>
       <groupId>com.drewnoakes</groupId>
@@ -83,7 +97,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.4.2</version>
+          <version>3.5.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -122,12 +136,16 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>21</source>
-          <target>21</target>
+          <compilerArgs>
+            <arg>-parameters</arg>
+            <arg>-g</arg>
+          </compilerArgs>
           <encoding>UTF-8</encoding>
+          <release>17</release>
         </configuration>
       </plugin>
       <plugin>
+        <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <configuration>

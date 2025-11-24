@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2025, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright (c) 2004-2026, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
@@ -7,11 +7,10 @@
 package photosrenamer.gui;
 
 import java.awt.Component;
-
+import java.io.Serial;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.SwingWorker;
-
 import photosrenamer.photosrenamer.FileItem;
 
 /**
@@ -21,7 +20,7 @@ import photosrenamer.photosrenamer.FileItem;
  */
 class FileItemThumbnailRenderer extends DefaultListCellRenderer {
 
-  private static final long serialVersionUID = -8276388250252139874L;
+  @Serial private static final long serialVersionUID = -8276388250252139874L;
 
   /**
    * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.swing.JList,

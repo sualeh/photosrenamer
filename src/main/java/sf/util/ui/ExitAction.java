@@ -1,11 +1,12 @@
 /*
- * Copyright (c) 2004-2025, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright (c) 2004-2026, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
  */
 package sf.util.ui;
 
+import java.io.Serial;
 import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
@@ -16,7 +17,7 @@ import javax.swing.KeyStroke;
  */
 public final class ExitAction extends GuiAction {
 
-  private static final long serialVersionUID = 5749903957626188378L;
+  @Serial private static final long serialVersionUID = 5749903957626188378L;
 
   /**
    * Exits an application

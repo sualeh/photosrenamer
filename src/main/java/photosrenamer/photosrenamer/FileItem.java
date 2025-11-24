@@ -1,11 +1,18 @@
 /*
- * Copyright (c) 2004-2025, Sualeh Fatehi <sualeh@hotmail.com>
+ * Copyright (c) 2004-2026, Sualeh Fatehi <sualeh@hotmail.com>
  * This work is licensed under the Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 License.
  * To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/
  * or send a letter to Creative Commons, 543 Howard Street, 5th Floor, San Francisco, California, 94105, USA.
  */
 package photosrenamer.photosrenamer;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifDirectoryBase;
+import com.drew.metadata.exif.ExifIFD0Directory;
+import com.drew.metadata.exif.ExifSubIFDDirectory;
+import com.drew.metadata.iptc.IptcDirectory;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -15,6 +22,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,17 +35,8 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.metadata.Directory;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.exif.ExifDirectoryBase;
-import com.drew.metadata.exif.ExifIFD0Directory;
-import com.drew.metadata.exif.ExifSubIFDDirectory;
-import com.drew.metadata.iptc.IptcDirectory;
 
 /**
  * Represents an image file, and metadata.
@@ -175,7 +174,7 @@ public final class FileItem implements Serializable {
 
   private static final Logger logger = Logger.getGlobal();
 
-  private static final long serialVersionUID = -4057318666488966541L;
+  @Serial private static final long serialVersionUID = -4057318666488966541L;
 
   private static final int IMAGE_WIDTH = 180;
   private static final int IMAGE_HEIGHT = (int) (IMAGE_WIDTH * 2F / 3F);
