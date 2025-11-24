@@ -9,7 +9,7 @@ project:
     such as by filename or by the date in the EXIF data in the image. After you are done
     sorting, you can rename all of the photos with a prefix, and Photos Renamer will
     number them.
-  copyright: Copyright (c) 2004-2025, Sualeh Fatehi.
+  copyright: Copyright (c) 2004-2026, Sualeh Fatehi.
   inceptionYear: 2004
   links:
     homepage: https://github.com/sualeh/photosrenamer
