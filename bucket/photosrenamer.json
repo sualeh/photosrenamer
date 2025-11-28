@@ -1,27 +1,27 @@
 {
-  "version": "1.4.4",
-  "description": "Application to sort camera photos by the EXIF date, and rename them.",
-  "homepage": "https://github.com/sualeh/photosrenamer",
-  "license": "CC-BY-NC-ND-3.0",
-  "url": "https://github.com/sualeh/photosrenamer/releases/download/v1.4.4/photosrenamer-1.4.4-bin.zip",
-  "hash": "sha256:f3efb3bc1e51ca47f69be9842562071e818a9d08e58ab7ad3f6fc319fd814643",
-  "extract_dir": "photosrenamer-1.4.4-bin",
-  "env_add_path": "bin",
-  "suggest": {
-    "JDK": [
-      "java/oraclejdk",
-      "java/openjdk"
-    ]
-  },
-  "checkver": {
-    "url": "https://github.com/sualeh/photosrenamer/releases/latest",
-    "re": "v([\\d.]+).zip"
-  },
-  "autoupdate": {
-    "url": "https://github.com/sualeh/photosrenamer/releases/download/v$version/photosrenamer-$version-bin.zip",
-    "extract_dir": "photosrenamer-$version-bin",
-    "hash": {
-      "url": "$url.sha256"
+    "version": "1.5.0",
+    "description": "Application to sort camera photos by the EXIF date, and rename them.",
+    "homepage": "https://github.com/sualeh/photosrenamer",
+    "license": "CC-BY-NC-ND-3.0",
+    "url": "https://github.com/sualeh/photosrenamer/releases/download/v1.5.0/photosrenamer-1.5.0-bin.zip",
+    "hash": "sha256:475d15fb6e121e4e887eda63691f8e291c94d251645e1d8ba982b262471d5115",
+    "extract_dir": "photosrenamer-1.5.0-bin",
+    "env_add_path": "bin",
+    "suggest": {
+        "JDK": [
+            "java/oraclejdk",
+            "java/openjdk"
+        ]
+    },
+    "checkver": {
+        "url": "https://github.com/sualeh/photosrenamer/releases/latest",
+        "re": "v([\\d.]+).zip"
+    },
+    "autoupdate": {
+        "url": "https://github.com/sualeh/photosrenamer/releases/download/v$version/photosrenamer-$version-bin.zip",
+        "extract_dir": "photosrenamer-$version-bin",
+        "hash": {
+            "url": "$url.sha256"
+        }
     }
-  }
 }
